@@ -1,11 +1,8 @@
 package com.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Date;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "EmployeeDetails")
@@ -13,20 +10,35 @@ public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "empId")
 	private Integer empId;
-	@Column(name = "empName")
 	private String empName;
-	@Column(name = "empLastName")
 	private String empLastName;
-	@Column(name = "empDesignation")
 	private String empDesignation;
-	@Column(name = "empUserName")
-	private String empUserName;
-	@Column(name = "empEmailID")
 	private String empEmailID;
-	@Column(name = "empPassword")
-	private String empPassword;
+	private Date joiningDate;
+	
+	@OneToOne(mappedBy = "employee",cascade = CascadeType.ALL)
+	private User user;
+
+	
+	 public void setJoiningDate(Date joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+
+
+	public Date getJoiningDate() {
+		return joiningDate;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 	public Integer getEmpId() {
 		return empId;
@@ -60,13 +72,6 @@ public class Employee {
 		this.empDesignation = empDesignation;
 	}
 
-	public String getEmpUserName() {
-		return empUserName;
-	}
-
-	public void setEmpUserName(String empUserName) {
-		this.empUserName = empUserName;
-	}
 
 	public String getEmpEmailID() {
 		return empEmailID;
@@ -74,14 +79,6 @@ public class Employee {
 
 	public void setEmpEmailID(String empEmailID) {
 		this.empEmailID = empEmailID;
-	}
-
-	public String getEmpPassword() {
-		return empPassword;
-	}
-
-	public void setEmpPassword(String empPassword) {
-		this.empPassword = empPassword;
 	}
 
 }

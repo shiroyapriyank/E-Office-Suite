@@ -1,6 +1,4 @@
-package com.dao;
-
-import java.util.List;
+package com.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

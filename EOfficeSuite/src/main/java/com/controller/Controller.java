@@ -4,26 +4,22 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dao.EmployeeRepository;
 import com.model.Employee;
+import com.service.UserService;
 
 @RestController
 public class Controller {
 	
-	private final EmployeeRepository empRepository;
-	
 	@Autowired
-	public Controller(EmployeeRepository employeeRespository) {
-		this.empRepository = employeeRespository;
-	}
+	private UserService userService;
 	
 	@PostMapping("/addemployee")
 	public String addEmp(@Valid Employee emp) {
-		empRepository.save(emp);
+		userService.saveUser(emp);
 		return "success";
 	}
-
 
 }
