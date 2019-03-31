@@ -10,7 +10,7 @@ public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer empId;
+	private Long empId;
 	private String empName;
 	private String empLastName;
 	private String empDesignation;
@@ -40,11 +40,11 @@ public class Employee {
 	}
 
 
-	public Integer getEmpId() {
+	public Long getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(Integer empId) {
+	public void setEmpId(Long empId) {
 		this.empId = empId;
 	}
 

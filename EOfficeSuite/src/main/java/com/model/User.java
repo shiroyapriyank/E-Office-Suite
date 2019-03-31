@@ -12,20 +12,20 @@ public class User {
 	@Column(name = "user_ID")
 	@GeneratedValue(generator = "gen")
 	@GenericGenerator(name = "gen", strategy = "foreign", parameters = @Parameter(name = "property", value = "employee"))
-	private Integer empId;
+	private Long empId;
 	private String empEmailID;
 	private String empPassword;
-	private String empUserName;
-
+	private String empUserName;	
 	@OneToOne
 	@PrimaryKeyJoinColumn
 	private Employee employee;
 
-	public Integer getEmpId() {
+	
+	public Long getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(Integer empId) {
+	public void setEmpId(Long empId) {
 		this.empId = empId;
 	}
 
@@ -60,5 +60,5 @@ public class User {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-
+	
 }
