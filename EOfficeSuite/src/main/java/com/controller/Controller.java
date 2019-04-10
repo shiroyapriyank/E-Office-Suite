@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,11 @@ public class Controller {
 
 	@PutMapping("/updateEmployee/{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long id,@RequestBody Employee emp){
+		List<Employee> list = new ArrayList<Employee>();
+		list.add(emp);
+		System.out.println("---------------------");
+		list.forEach(System.out::println);
+		System.out.println("---------------------");
 		return userService.updateEmp(id, emp);
 	}
 
