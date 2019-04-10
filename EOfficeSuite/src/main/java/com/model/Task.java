@@ -1,7 +1,6 @@
 package com.model;
 
 import java.util.Date;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +15,7 @@ public class Task {
 	private Date startDate;
 	private Date endDate;
 	private Long empID;
-	private boolean status;
+	private String status;
 
 	public int getTaskID() {
 		return taskID;
@@ -66,11 +65,11 @@ public class Task {
 		this.empID = empID;
 	}
 
-	public boolean isStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

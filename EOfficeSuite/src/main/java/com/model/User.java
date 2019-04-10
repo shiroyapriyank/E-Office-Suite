@@ -4,6 +4,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "User")
 public class User {
@@ -16,13 +18,42 @@ public class User {
 	private String empEmailID;
 	private String empPassword;
 	private String empUserName;	
+	@JsonBackReference
 	@OneToOne
 	@PrimaryKeyJoinColumn
 	private Employee employee;
 
 	
+	
+	
+	public User() {
+	}
+
+	public User(Long empId, String empEmailID, String empPassword, String empUserName) {
+		super();
+		this.empId = empId;
+		this.empEmailID = empEmailID;
+		this.empPassword = empPassword;
+		this.empUserName = empUserName;
+	}
+
+	public User(Long empId, String empEmailID, String empPassword, String empUserName, Employee employee) {
+		super();
+		this.empId = empId;
+		this.empEmailID = empEmailID;
+		this.empPassword = empPassword;
+		this.empUserName = empUserName;
+		this.employee = employee;
+	}
+
 	public Long getEmpId() {
 		return empId;
+	}
+
+	@Override
+	public String toString() {
+		return "User [empId=" + empId + ", empEmailID=" + empEmailID + ", empPassword=" + empPassword + ", empUserName="
+				+ empUserName + "]";
 	}
 
 	public void setEmpId(Long empId) {

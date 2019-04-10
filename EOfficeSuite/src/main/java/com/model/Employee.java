@@ -4,7 +4,10 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
+
 @Table(name = "EmployeeDetails")
 public class Employee {
 
@@ -17,11 +20,49 @@ public class Employee {
 	private String empEmailID;
 	private Date joiningDate;
 	
+	@JsonManagedReference
 	@OneToOne(mappedBy = "employee",cascade = CascadeType.ALL)
 	private User user;
 
 	
 	 public void setJoiningDate(Date joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empLastName=" + empLastName
+				+ ", empDesignation=" + empDesignation + ", empEmailID=" + empEmailID + ", joiningDate=" + joiningDate
+				+ "]";
+	}
+
+
+	public Employee() {
+	}
+
+
+	public Employee(Long empId, String empName, String empLastName, String empDesignation, String empEmailID,
+			Date joiningDate, User user) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.empLastName = empLastName;
+		this.empDesignation = empDesignation;
+		this.empEmailID = empEmailID;
+		this.joiningDate = joiningDate;
+		this.user = user;
+	}
+
+
+	public Employee(Long empId, String empName, String empLastName, String empDesignation, String empEmailID,
+			Date joiningDate) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.empLastName = empLastName;
+		this.empDesignation = empDesignation;
+		this.empEmailID = empEmailID;
 		this.joiningDate = joiningDate;
 	}
 

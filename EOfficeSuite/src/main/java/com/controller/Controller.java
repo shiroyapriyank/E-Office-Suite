@@ -1,32 +1,60 @@
 package com.controller;
 
-import javax.validation.Valid;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.model.Employee;
 import com.model.Task;
+import com.repository.EmployeeRepository;
 import com.service.UserService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class Controller {
 
-	
+
 	@Autowired
 	private UserService userService;
 
-	
+	@Autowired
+	private EmployeeRepository empRepo;
+
 	@PostMapping("/addemployee")
-	public String addEmp(@Valid Employee emp) {
+	public String addEmp(@RequestBody Employee emp) {
 		return userService.saveUser(emp);
 	}
-	
-	
+
+	@GetMapping(value="/listEmployee",produces = "application/json")
+	public List<Employee> listEmployee(){
+		return (List<Employee>) empRepo.findAll();
+	}
+
+	@PutMapping("/updateEmployee/{id}")
+	public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long id,@RequestBody Employee emp){
+		return userService.updateEmp(id, emp);
+	}
+
 	@PostMapping("/assignTask")
-	public String assignTask(@Valid Task task) {
+	public String assignTask(@RequestBody Task task) {
 		return userService.saveTask(task);
 	}
+
+	@PostMapping("/empTaskStatus")
+	public String empTaskStatus(@RequestBody Task task) {
+		return null;
+	}
+
+	@GetMapping("/getById/{id}")
+	public List<Employee> findEmpById(@PathVariable Long id){
+		List<Employee> emp = userService.findById(id);
+		return emp;
+	}
+
 }
