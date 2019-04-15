@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.model.Employee;
+import com.model.MeetingRoom;
 import com.model.Task;
+import com.model.TrainingRoom;
 import com.repository.EmployeeRepository;
+import com.repository.MeetingRepository;
 import com.repository.TaskRepository;
+import com.repository.TrainingRepository;
 import com.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -30,6 +34,12 @@ public class Controller {
 	@Autowired
 	private TaskRepository taskRepo;
 
+	@Autowired
+	private MeetingRepository meetRepo;
+	
+	@Autowired
+	private TrainingRepository trainRepo;
+	
 	@GetMapping("/")
 	public String home() {
 		return "Hello";
@@ -55,6 +65,16 @@ public class Controller {
 	public List<Task> listTask(){
 		return (List<Task>) taskRepo.findAll();
 	}
+	
+	@GetMapping(value="/listTrainingRoom",produces = "application/json")
+	public List<TrainingRoom> listTrainingRoom(){
+		return (List<TrainingRoom>)trainRepo.findAll();
+	}
+	
+	@GetMapping(value="/listMeetingRoom",produces = "application/json")
+	public List<MeetingRoom> listMeetingRoom(){
+		return (List<MeetingRoom>) meetRepo.findAll();
+	}
 
 	@PutMapping("/updateEmployee/{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long id,@RequestBody Employee emp){
@@ -74,6 +94,27 @@ public class Controller {
 		list.forEach(System.out::println);
 		System.out.println("---------------------");		
 		return userService.saveTask(task);
+	}
+	
+	@PostMapping("/addTrainingRoom")
+	public TrainingRoom addTrainingRoom(@RequestBody TrainingRoom train) {
+		List<TrainingRoom> list = new ArrayList<>();
+		list.add(train);
+		System.out.println("---------------------");
+		list.forEach(System.out::println);
+		System.out.println("---------------------");	
+		
+		return trainRepo.save(train);
+	}
+	
+	@PostMapping("/addMeetingRoom")
+	public MeetingRoom addMeetingRoom(@RequestBody MeetingRoom meeting) {
+		List<MeetingRoom> list = new ArrayList<>();
+		list.add(meeting);
+		System.out.println("---------------------");
+		list.forEach(System.out::println);
+		System.out.println("---------------------");	
+		return meetRepo.save(meeting);
 	}
 
 	@PostMapping("/empTaskStatus")
