@@ -19,16 +19,14 @@ public class Employee {
 	private String empDesignation;
 	private String empEmailID;
 	private Date joiningDate;
-	
+
 	@JsonManagedReference
-	@OneToOne(mappedBy = "employee",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
 	private User user;
 
-	
-	 public void setJoiningDate(Date joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
-
 
 	@Override
 	public String toString() {
@@ -37,10 +35,8 @@ public class Employee {
 				+ "]";
 	}
 
-
 	public Employee() {
 	}
-
 
 	public Employee(Long empId, String empName, String empLastName, String empDesignation, String empEmailID,
 			Date joiningDate, User user) {
@@ -54,7 +50,6 @@ public class Employee {
 		this.user = user;
 	}
 
-
 	public Employee(Long empId, String empName, String empLastName, String empDesignation, String empEmailID,
 			Date joiningDate) {
 		super();
@@ -66,20 +61,17 @@ public class Employee {
 		this.joiningDate = joiningDate;
 	}
 
-
 	public Date getJoiningDate() {
 		return joiningDate;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
 
-
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 
 	public Long getEmpId() {
 		return empId;
@@ -112,7 +104,6 @@ public class Employee {
 	public void setEmpDesignation(String empDesignation) {
 		this.empDesignation = empDesignation;
 	}
-
 
 	public String getEmpEmailID() {
 		return empEmailID;

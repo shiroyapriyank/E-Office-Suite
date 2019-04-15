@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.Employee;
 import com.model.Task;
 import com.repository.EmployeeRepository;
+import com.repository.TaskRepository;
 import com.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class Controller {
-
 
 	@Autowired
 	private UserService userService;
@@ -27,6 +27,20 @@ public class Controller {
 	@Autowired
 	private EmployeeRepository empRepo;
 
+	@Autowired
+	private TaskRepository taskRepo;
+
+	@GetMapping("/")
+	public String home() {
+		return "Hello";
+	}
+	
+	@GetMapping("/private")
+	public String privateArea() {
+		return "private";
+	}
+	
+	
 	@PostMapping("/addemployee")
 	public String addEmp(@RequestBody Employee emp) {
 		return userService.saveUser(emp);
@@ -35,6 +49,11 @@ public class Controller {
 	@GetMapping(value="/listEmployee",produces = "application/json")
 	public List<Employee> listEmployee(){
 		return (List<Employee>) empRepo.findAll();
+	}
+
+	@GetMapping(value="/listTask",produces = "application/json")
+	public List<Task> listTask(){
+		return (List<Task>) taskRepo.findAll();
 	}
 
 	@PutMapping("/updateEmployee/{id}")
@@ -49,6 +68,11 @@ public class Controller {
 
 	@PostMapping("/assignTask")
 	public String assignTask(@RequestBody Task task) {
+		List<Task> list = new ArrayList<Task>();
+		list.add(task);
+		System.out.println("---------------------");
+		list.forEach(System.out::println);
+		System.out.println("---------------------");		
 		return userService.saveTask(task);
 	}
 

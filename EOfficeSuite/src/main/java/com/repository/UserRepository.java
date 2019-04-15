@@ -7,4 +7,5 @@ import com.model.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long>{
+	User findByempEmailID(String email);
 }

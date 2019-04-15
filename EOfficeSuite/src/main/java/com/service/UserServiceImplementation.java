@@ -2,6 +2,7 @@ package com.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -9,9 +10,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import com.mail.SendMail;
 import com.model.Employee;
+import com.model.Role;
 import com.model.Task;
 import com.model.User;
 import com.repository.EmployeeRepository;
@@ -25,7 +28,6 @@ public class UserServiceImplementation implements UserService {
 	private UserRepository userRepo;
 	@Autowired
 	private EmployeeRepository empRepo;
-	
 	@Autowired
 	private TaskRepository taskRepo;
 
@@ -46,11 +48,14 @@ public class UserServiceImplementation implements UserService {
 		SimpleDateFormat sd = new SimpleDateFormat("MM-dd");
 		String date = sd.format(JoiningDate);
 		password = firstName.substring(0, 2) + "_" + lastName.substring(0, 2) + "_" + date;
+		String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
+		System.out.println("Encyrpted Password = "+hashPassword);
 		System.out.println(password);
 		user.setEmpEmailID(emp.getEmpEmailID());
 		user.setEmpUserName(emp.getEmpName());
-		user.setEmpPassword(password);
+		user.setEmpPassword(hashPassword);
 		user.setEmployee(emp);
+		user.setRoles(Arrays.asList(new Role("USER"),new Role("ACTUATOR")));
 		//Save user
 		userRepo.save(user);
 		//send mail to Employee
@@ -60,11 +65,15 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public String saveTask(Task task) {
+		System.out.println("Inside Assign Done");
 		taskRepo.save(task);
+		System.out.println("Task Assign Done");
+		System.out.println("Sending Mail");
 		SendMail mail = new SendMail();
 		Optional<User> users = userRepo.findById(task.getEmpID());
 		System.out.println(users);
 		mail.sendMailForTaskAssign(users.get().getEmpEmailID(), task, users.get().getEmpUserName());
+		System.out.println("Mail Send");
 		return "Added";
 	}
 
@@ -104,7 +113,6 @@ public class UserServiceImplementation implements UserService {
 		return listemp;
 		
 	}
-	
 	
 
 
