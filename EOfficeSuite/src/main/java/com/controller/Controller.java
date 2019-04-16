@@ -36,20 +36,19 @@ public class Controller {
 
 	@Autowired
 	private MeetingRepository meetRepo;
-	
+
 	@Autowired
 	private TrainingRepository trainRepo;
-	
+
 	@GetMapping("/")
 	public String home() {
 		return "Hello";
 	}
-	
+
 	@GetMapping("/private")
 	public String privateArea() {
 		return "private";
 	}
-	
 	
 	@PostMapping("/addemployee")
 	public String addEmp(@RequestBody Employee emp) {
@@ -65,12 +64,12 @@ public class Controller {
 	public List<Task> listTask(){
 		return (List<Task>) taskRepo.findAll();
 	}
-	
+
 	@GetMapping(value="/listTrainingRoom",produces = "application/json")
 	public List<TrainingRoom> listTrainingRoom(){
 		return (List<TrainingRoom>)trainRepo.findAll();
 	}
-	
+
 	@GetMapping(value="/listMeetingRoom",produces = "application/json")
 	public List<MeetingRoom> listMeetingRoom(){
 		return (List<MeetingRoom>) meetRepo.findAll();
@@ -95,18 +94,17 @@ public class Controller {
 		System.out.println("---------------------");		
 		return userService.saveTask(task);
 	}
-	
+
 	@PostMapping("/addTrainingRoom")
 	public TrainingRoom addTrainingRoom(@RequestBody TrainingRoom train) {
 		List<TrainingRoom> list = new ArrayList<>();
 		list.add(train);
 		System.out.println("---------------------");
 		list.forEach(System.out::println);
-		System.out.println("---------------------");	
-		
+		System.out.println("---------------------");		
 		return trainRepo.save(train);
 	}
-	
+
 	@PostMapping("/addMeetingRoom")
 	public MeetingRoom addMeetingRoom(@RequestBody MeetingRoom meeting) {
 		List<MeetingRoom> list = new ArrayList<>();
