@@ -55,7 +55,7 @@ public class UserServiceImplementation implements UserService {
 		user.setEmpUserName(emp.getEmpName());
 		user.setEmpPassword(hashPassword);
 		user.setEmployee(emp);
-		user.setRoles(Arrays.asList(new Role("USER"),new Role("ACTUATOR")));
+		user.setRoles(Arrays.asList(new Role("USER")));
 		//Save user
 		userRepo.save(user);
 		//send mail to Employee
@@ -114,6 +114,28 @@ public class UserServiceImplementation implements UserService {
 		
 	}
 	
+	@Override
+    public ResponseEntity<Task> updateTask(Task[] task) {
+        SendMail mail = new SendMail();
+        User user = new User();
+        for (Task task1 : task) {
+            Optional<Task> tasks = taskRepo.findById(task1.getTaskID());
+            Optional<User> userEmail = userRepo.findById(task1.getEmpID());
+            if (tasks.isPresent()){
+                Task uTask = tasks.get();
+                uTask.setEmpID(task1.getEmpID());
+                uTask.setTaskName(task1.getTaskName());
+                uTask.setTaskDescription(task1.getTaskDescription());
+                uTask.setEndDate(task1.getEndDate());	
+                uTask.setStartDate(task1.getStartDate());
+                uTask.setTaskID(task1.getTaskID());
+                uTask.setStatus(task1.getStatus());
+                mail.sendMailForTaskStatus(task1,userEmail.get().getEmpUserName());
+                return new ResponseEntity<>(taskRepo.save(uTask),HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
 }

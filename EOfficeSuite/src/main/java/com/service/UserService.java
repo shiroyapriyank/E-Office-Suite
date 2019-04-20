@@ -13,4 +13,5 @@ public interface UserService {
 	String saveTask(Task task);
 	ResponseEntity<Employee> updateEmp(Long id, Employee emp);
 	List<Employee> findById(Long id);
+	ResponseEntity<Task> updateTask(Task[] task);
 }
