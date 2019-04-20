@@ -1,16 +1,26 @@
 package com.model;
 
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "User")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "empUserName"
+        }),
+        @UniqueConstraint(columnNames = {
+                "empEmailID"
+        })
+})
 public class User {
 
 	@Id
@@ -18,8 +28,15 @@ public class User {
 	@GeneratedValue(generator = "gen")
 	@GenericGenerator(name = "gen", strategy = "foreign", parameters = @Parameter(name = "property", value = "employee"))
 	private Long empId;
+	@NaturalId
+    @NotBlank
+    @Size(max = 50)
+    @Email
 	private String empEmailID;
+	@NotBlank
+    @Size(min=6, max = 100)
 	private String empPassword;
+	@NotBlank
 	private String empUserName;
 	@JsonBackReference
 	@OneToOne

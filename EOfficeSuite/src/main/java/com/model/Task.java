@@ -9,7 +9,7 @@ public class Task {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int taskID;
+	private Long taskID;
 	private String taskName;
 	private String taskDescription;
 	private Date startDate;
@@ -17,11 +17,12 @@ public class Task {
 	private Long empID;
 	private String status;
 
-	public int getTaskID() {
+	
+	public Long getTaskID() {
 		return taskID;
 	}
 
-	public void setTaskID(int taskID) {
+	public void setTaskID(Long taskID) {
 		this.taskID = taskID;
 	}
 
