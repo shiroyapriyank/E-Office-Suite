@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.model.Employee;
 import com.model.MeetingRoom;
@@ -21,8 +22,8 @@ import com.repository.TaskRepository;
 import com.repository.TrainingRepository;
 import com.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@RequestMapping("/index")
 public class Controller {
 
 	@Autowired
@@ -49,7 +50,7 @@ public class Controller {
 	public String privateArea() {
 		return "private";
 	}
-	
+
 	@PostMapping("/addemployee")
 	public String addEmp(@RequestBody Employee emp) {
 		return userService.saveUser(emp);
@@ -84,6 +85,13 @@ public class Controller {
 		System.out.println("---------------------");
 		return userService.updateEmp(id, emp);
 	}
+
+	@PutMapping(value = "/updateTask")
+    public ResponseEntity<Task> updateTask(@RequestBody Task task[]){
+        for (Task task1 : task)
+            System.out.println(task1);
+        return userService.updateTask(task);
+    }
 
 	@PostMapping("/assignTask")
 	public String assignTask(@RequestBody Task task) {
@@ -125,5 +133,11 @@ public class Controller {
 		List<Employee> emp = userService.findById(id);
 		return emp;
 	}
+
+	@GetMapping("/getTaskById/{id}")
+    public List<Task> findTaskByEmpID(@PathVariable Long id){
+        List<Task> task = taskRepo.findByEmpID(id);
+        return task;
+    }
 
 }
